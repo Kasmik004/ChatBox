@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ box_name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        button {
+            background-color: #007bff; /* Blue shade color for button */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            width: 25%;
+            background-color: #007bff; /* Blue shade color for button */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <form action="{{ url_for('home.homepage', user=user_name) }}" method="POST">
+            <button>Back</button>
+        </form>
+        <hr>
+        <div name="chats">
+            <table>
+                {% for chat, user in chats %}
+                <tr>
+                    <td>{{ user.name }} </td>
+                    <td>{{ chat.chat }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <hr>
+        <div name="talk">
+            <form action="{{ url_for('home.chat_process', current_box=box_name, current_user=user_name) }}" method="POST">
+                <input type="text" id="send_chat" name="current_chat" placeholder="Type your message here" required>
+                <button type="submit" id="send">Send</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const socket = io({autoConnect: false});
+        document.getElementById("send").addEventListener('click', function(){
+            let message = document.getElementByIf("send_chat").value;
+            socket.emit("new_message", message, current_box:{{ box_name }},current_user:{{ user_name }});
+            document.getElementByIf("send_chat").value = "";
+
+        }
+    </script>
+</body>
+</html>

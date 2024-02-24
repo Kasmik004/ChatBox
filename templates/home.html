@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logout-button {
+            float: right;
+        }
+
+        .chat-boxes {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .chat-box {
+            width: calc(33.33% - 20px);
+            margin: 0 10px 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-box button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 0;
+            cursor: pointer;
+        }
+
+        .chat-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .chat-box h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome {{ session.username }}</h1>
+            <form action="/main/logout" method="get" class="logout-button">
+                <button type="submit">Log Out</button>
+            </form>
+        </div>
+
+        <div class="chat-boxes">
+            {% for box in boxes %}
+            <div class="chat-box">
+                <h2>{{ box.chat_box_name }}</h2>
+                <form action="{{ url_for('home.box', current_box=box.chat_box_name, current_user=data.name) }}" method="GET">
+                    <button type="submit">Enter Chat</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
