@@ -58,5 +58,6 @@ def reg_auth():
 def logout():
     session['username'] = None
     session['user_data']=None
+    session.clear()
     return render_template("login.html", err=0)
 

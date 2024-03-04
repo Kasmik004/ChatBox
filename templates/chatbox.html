@@ -90,8 +90,8 @@
     </div>
     <script>
         const socket = io({autoConnect: false});
-        document.getElementById("send").addEventListener('click', function(){
-            let message = document.getElementByIf("send_chat").value;
+        document.getElementById("send").addEventListener('click'), function(){
+            let message = document.getElementById("send_chat").value;
             socket.emit("new_message", message, current_box:{{ box_name }},current_user:{{ user_name }});
             document.getElementByIf("send_chat").value = "";
 
