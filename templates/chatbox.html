@@ -82,20 +82,34 @@
 
         <hr>
         <div name="talk">
-            <form action="{{ url_for('home.chat_process', current_box=box_name, current_user=user_name) }}" method="POST">
+        <form action="{{ url_for('home.chat_process', current_user=user_name,current_box=box_name) }}" method="POST">
                 <input type="text" id="send_chat" name="current_chat" placeholder="Type your message here" required>
                 <button type="submit" id="send">Send</button>
             </form>
         </div>
     </div>
     <script>
-        const socket = io({autoConnect: false});
-        document.getElementById("send").addEventListener('click'), function(){
-            let message = document.getElementById("send_chat").value;
-            socket.emit("new_message", message, current_box:{{ box_name }},current_user:{{ user_name }});
-            document.getElementByIf("send_chat").value = "";
+        // const socket = io({ autoConnect: false });
 
-        }
+        // function onPageLoad() {
+        //     socket.connect();
+        // }
+
+        // // Call onPageLoad function when the page finishes loading
+        // window.onload = onPageLoad;
+        
+        // let current_box = "{{ box_name }}";
+        // let current_user = "{{ user_name }}";
+
+        // document.getElementById("send").addEventListener('click', function() {
+            
+        //     let message = document.getElementById("send_chat").value;
+
+        //     console.log(current_box, current_user);
+        //     socket.emit("new_message", message, current_box, current_user);
+        //     document.getElementById("send_chat").value = "";  
+        // });
     </script>
+    
 </body>
 </html>

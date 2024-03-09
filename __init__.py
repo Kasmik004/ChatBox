@@ -21,7 +21,7 @@ def create_tables():
         db.create_all()
 
 
-
+#action="{{ url_for('home.chat_process', current_user=user_name,current_box=box_name) }}" method="POST"
 
 
 
