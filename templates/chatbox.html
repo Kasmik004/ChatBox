@@ -70,45 +70,60 @@
         </form>
         <hr>
         <div name="chats">
-            <table>
+            <table id="chat_table">
+                <thead>
+                    <th>User</th>
+                    <th>Message</th>
+                </thead>
+                <tbody>
                 {% for chat, user in chats %}
                 <tr>
                     <td>{{ user.name }} </td>
                     <td>{{ chat.chat }}</td>
                 </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
 
         <hr>
         <div name="talk">
-        <form action="{{ url_for('home.chat_process', current_user=user_name,current_box=box_name) }}" method="POST">
+        <form method="POST">
                 <input type="text" id="send_chat" name="current_chat" placeholder="Type your message here" required>
                 <button type="submit" id="send">Send</button>
             </form>
         </div>
     </div>
     <script>
-        // const socket = io({ autoConnect: false });
+    const socket = io();  // Remove autoConnect: false
 
-        // function onPageLoad() {
-        //     socket.connect();
-        // }
+    // function onPageLoad() {
+    //     socket.connect();
+    // }
 
-        // // Call onPageLoad function when the page finishes loading
-        // window.onload = onPageLoad;
-        
-        // let current_box = "{{ box_name }}";
-        // let current_user = "{{ user_name }}";
+    // Call onPageLoad function when the page finishes loading
+    // window.onload = onPageLoad;
 
-        // document.getElementById("send").addEventListener('click', function() {
-            
-        //     let message = document.getElementById("send_chat").value;
+    let current_box = "{{ box_name }}";
+    let current_user = "{{ user_name }}";
 
-        //     console.log(current_box, current_user);
-        //     socket.emit("new_message", message, current_box, current_user);
-        //     document.getElementById("send_chat").value = "";  
-        // });
+    document.getElementById("send").addEventListener('click', function() {
+        let message = document.getElementById("send_chat").value;
+
+        console.log(current_box, current_user);
+        socket.emit("new_message", message, current_box, current_user);
+        document.getElementById("send_chat").value = "";
+    });
+
+    socket.on('add_new_message', function(data) {
+        var table = document.getElementById('chat_table').getElementsByTagName('tbody')[0];
+        console.log("Received new message:", data.chat);
+        var newRow = table.insertRow();
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        cell1.innerHTML = data.user;
+        cell2.innerHTML = data.chat;
+    });  
     </script>
     
 </body>
