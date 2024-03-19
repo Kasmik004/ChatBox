@@ -6,7 +6,7 @@ from extensions import db
 @socketio.on("connect")
 def handle_connect():
     print("Client Connected")
-
+#edit
 @socketio.on("new_message")
 def handle_new_message(message, current_box, current_user):
         user = User.query.filter_by(name=current_user).first()
