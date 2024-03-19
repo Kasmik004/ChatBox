@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for
 from extensions import db
 from models.Users import User
-from models.video import Video
+
 from models.Users import ChatBox, Chats
 home = Blueprint('home', __name__)
 

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, request, redirect, url_fo
 from extensions import db
 from models.Users import User, Chats, ChatBox
 from flask_session import Session
-from models.video import Video
+
 main = Blueprint('main', __name__)
 
 
